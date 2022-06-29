@@ -10,11 +10,22 @@ import traceback
 
 def extract_info(data: Dict):
     """Extract Necessary info from the API response"""
+    thumbnails = data['snippet']['thumbnails']
+    # Scan thumbnail via hierachy if high exists else go for medium or low
+    thumbnail = thumbnails.get(
+        'high',
+        thumbnails.get(
+            'medium',
+            thumbnails.get(
+                'default'
+            )
+        )
+    )
     return VideoModel(
         videoId=data['id']['videoId'],
         title=data['snippet']['title'],
         description=data['snippet']['description'],
-        thumbnail=data['snippet']['thumbnails']['default']['url'],
+        thumbnail=thumbnail['url'],
         publishTime=datetime.strptime(
             data['snippet']['publishTime'],
             "%Y-%m-%dT%H:%M:%SZ"
@@ -27,8 +38,9 @@ async def scrap(query: str, youtube):
     # builds the search request
     request = youtube.search().list(
         q=query,
-        part='snippet,contentDetails,statistics',
+        part='snippet',
         type='video',
+        order='date',
         maxResults=50,
         publishedAfter='2015-01-01T00:00:00Z'
     )
@@ -59,5 +71,6 @@ async def run_scrapper_task(interval: int, query: str, api_keys: List[str]):
             )
         except Exception:
             print(traceback.format_exc())
+            await asyncio.sleep(interval)
             # recreate youtube request with next api key
             youtube = build('youtube', 'v3', developerKey=next(api_keys))

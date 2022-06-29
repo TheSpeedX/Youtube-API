@@ -272,16 +272,16 @@
         <!-- Single Video starts -->
         {% for video in videos %}
         <div class="video">
-          <a href="http://www.youtube.com/watch?v={{video.get('videoId')}}">
+          <a href="http://www.youtube.com/watch?v={{video.get('videoId')}}" target="_blank">
             <div class="video__thumbnail">
               <img src="{{video.get('thumbnail')}}" alt="" />
             </div>
             <div class="video__details">
               <div class="title">
                 <h3>
-                  {{video.get('title')}}
+                  {{video.get('title')|safe}}
                 </h3>
-                <a href="">{{video.get('channelTitle')}}</a>
+                <a href="">{{video.get('channelTitle')|safe}}</a>
               </div>
             </div>
           </a>

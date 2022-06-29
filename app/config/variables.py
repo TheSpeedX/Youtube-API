@@ -10,6 +10,6 @@ MONGO_CONFIG = {
 
 API_KEYS = os.getenv("API_KEYS").split()
 
-SEARCH_QUERY = "official"
+SEARCH_QUERY = os.getenv("SEARCH_QUERY")
 
-REFRESH_INTERVAL = 10
+REFRESH_INTERVAL = int(os.getenv("REFRESH_INTERVAL"))
