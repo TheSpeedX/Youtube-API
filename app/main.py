@@ -36,11 +36,11 @@ async def startup_event():
         },
         default_language='english')
     # Create a task to run asynchronously on background to continously scrap
-    # asyncio.create_task(
-    #     run_scrapper_task(
-    #         REFRESH_INTERVAL, SEARCH_QUERY, API_KEYS
-    #     )
-    # )
+    asyncio.create_task(
+        run_scrapper_task(
+            REFRESH_INTERVAL, SEARCH_QUERY, API_KEYS
+        )
+    )
 
 # Redirect to /docs endpoint for swagger documentation
 
