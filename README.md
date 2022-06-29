@@ -25,6 +25,7 @@ API Key can be created in Google Console after Activating Youtube Data V3 API
 - [x] Scrap interval is 60 seconds configurable in .env
 - [x] Scraps in background
 - [x] Multiple API Key Supported
+- [x] Fuzzy Text Search
 
 ### How To Run
 
@@ -49,3 +50,14 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 Now open <http://127.0.0.1:8000/dashboard> for dashboard <http://127.0.0.1:8000/docs> for docs
+
+### Screenshots
+
+Dashboard
+![Dashboard](images/1.bmp)
+
+Search Response
+![Dashboard](images/2.bmp)
+
+API Response
+![Dashboard](images/1.bmp)
