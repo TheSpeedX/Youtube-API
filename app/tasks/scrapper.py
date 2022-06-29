@@ -1,10 +1,11 @@
 from apiclient.discovery import build
 from typing import List, Dict
 from itertools import cycle
+from datetime import datetime
 from config.database import db
 from models.videos import VideoModel
 import asyncio
-from datetime import datetime
+import traceback
 
 
 def extract_info(data: Dict):
@@ -17,7 +18,8 @@ def extract_info(data: Dict):
         publishTime=datetime.strptime(
             data['snippet']['publishTime'],
             "%Y-%m-%dT%H:%M:%SZ"
-        )
+        ),
+        channelTitle=data['snippet']['channelTitle']
     )
 
 
@@ -25,7 +27,7 @@ async def scrap(query: str, youtube):
     # builds the search request
     request = youtube.search().list(
         q=query,
-        part='snippet',
+        part='snippet,contentDetails,statistics',
         type='video',
         maxResults=50,
         publishedAfter='2015-01-01T00:00:00Z'
@@ -56,5 +58,6 @@ async def run_scrapper_task(interval: int, query: str, api_keys: List[str]):
                 scrap(query, youtube),
             )
         except Exception:
+            print(traceback.format_exc())
             # recreate youtube request with next api key
             youtube = build('youtube', 'v3', developerKey=next(api_keys))

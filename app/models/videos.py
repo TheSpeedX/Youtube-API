@@ -9,4 +9,4 @@ class VideoModel(BaseModel):
     description: str
     thumbnail: str
     publishTime: datetime
-
+    channelTitle: str

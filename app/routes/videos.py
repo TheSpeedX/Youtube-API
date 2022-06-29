@@ -6,12 +6,7 @@ from typing import List
 videos = APIRouter()
 
 
-@videos.get('/videos', response_model=List[VideoModel])
-async def show_videos(
-    query: str = None,
-    limit: int = Query(50, ge=1, le=100, description="Page size limit"),
-    offset: int = Query(0, ge=0, description="Page offset"),
-):
+async def search_videos(query: str, limit: int, offset: int):
     if not query:
         return await db.videos.find().sort(
             "publishTime", -1
@@ -27,4 +22,18 @@ async def show_videos(
                 "$meta": "textScore"
             }
         }
-    ).sort([("score", -1)]).skip(offset).to_list(length=limit)
+    ).sort(
+        [
+            ("score",  {"$meta": "textScore"}),
+            ("publishTime", -1)
+        ]
+    ).skip(offset).to_list(length=limit)
+
+
+@videos.get('/videos', response_model=List[VideoModel])
+async def show_videos(
+    query: str = None,
+    limit: int = Query(50, ge=1, le=100, description="Page size limit"),
+    offset: int = Query(0, ge=0, description="Page offset"),
+):
+    return await search_videos(query, limit, offset)

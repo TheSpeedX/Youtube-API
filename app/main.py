@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from pymongo import TEXT
 from routes.videos import videos
+from routes.dashboard import dashboard
 from tasks.scrapper import run_scrapper_task
 from config.database import db
 from config.variables import SEARCH_QUERY, REFRESH_INTERVAL, API_KEYS
@@ -12,6 +13,7 @@ import asyncio
 app = FastAPI(title="Youtube Scrapper")
 
 origins = ['*']
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,7 +47,9 @@ async def startup_event():
 
 @app.get("/", response_class=RedirectResponse)
 async def home():
-    return "/docs"
+    return "/dashboard"
+
 
 # Include video route to show video related apis
 app.include_router(videos, prefix="/api", tags=["Videos"])
+app.include_router(dashboard, prefix="/dashboard", tags=["Dashboard"])
