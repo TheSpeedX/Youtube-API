@@ -30,7 +30,7 @@ API Key can be created in Google Console after Activating Youtube Data V3 API
 
 ### How To Run
 
-#### NOTE: Update `MONGODB_URL`, `MONGODB_NAME` and `API_KEYS` before proceeding
+#### NOTE: First Update `MONGODB_URL`, `MONGODB_NAME` and `API_KEYS` in `.example.env` and rename it to `.env`
 
 With Docker:  
 Make sure docker and docker-compose is installed
