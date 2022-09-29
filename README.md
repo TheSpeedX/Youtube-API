@@ -23,11 +23,14 @@ API Key can be created in Google Console after Activating Youtube Data V3 API
 
 - [x] Scraps youtube videos with keyword "official" which can be updated in .env
 - [x] Scrap interval is 60 seconds configurable in .env
-- [x] Scraps in background
-- [x] Multiple API Key Supported
+- [x] Scraps in background asynchronously
+- [x] Single/Multiple API Key Supported
 - [x] Fuzzy Text Search
+- [x] Pagination supported
 
 ### How To Run
+
+#### NOTE: First Update `MONGODB_URL`, `MONGODB_NAME` and `API_KEYS` in `.example.env` and rename it to `.env`
 
 With Docker:  
 Make sure docker and docker-compose is installed
@@ -38,7 +41,7 @@ cd Youtube-API
 docker-compose up
 ```
 
-Without Docker:
+Without Docker:  
 Make sure Python and PIP is installed
 
 ```bash
