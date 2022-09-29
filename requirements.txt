@@ -3,3 +3,5 @@ uvicorn[standard]
 pydantic[email]
 google-api-python-client
 jinja2
+motor
+dnspython
